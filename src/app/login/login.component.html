@@ -1,0 +1,25 @@
+<div class="loginBox">
+  <div class="logo">
+      <img src="assets/images/emblem.png"/>
+  </div>
+  <form #loginForm="ngForm" (ngSubmit)="loginForm.form.valid && onSubmit()">
+  <div class="loginInput">
+      <i class="fa fa-user"></i>
+      <input type="text" name="username" [(ngModel)]="loginPayload.username" #username="ngModel" class="form-control" placeholder="Username"/>
+      <div class="invalid-feedback" *ngIf="loginForm.submitted && username.invalid">
+          <p *ngIf="username.errors?.required">Name is required.</p>
+        </div>
+  </div>
+  <div class="loginInput">
+      <i class="fa fa-lock"></i>
+      <input type="password" name="password" [(ngModel)]="loginPayload.password" #password="ngModel" class="form-control" placeholder="Password" />
+      <div class="invalid-feedback" *ngIf="loginForm.submitted && password.invalid">
+          <p *ngIf="password.errors?.required">Name is required.</p>
+        </div>
+  </div>
+  <div class="d-grid">
+
+      <button type="submit" class="btn btn-primary">Log In</button>
+  </div>
+  </form>
+</div>

@@ -1,0 +1,266 @@
+<div class="wrapper clearfix">
+  <div class="sidebar p-15">
+      <div class="row">
+          <div class="col-12">
+              <h5>Select Hierarchy</h5>
+          </div>
+          <div class="col-12">
+              <div class="mb-2">
+                  <label for="exampleFormControlInput1" class="form-label">State</label>
+                  <select name="filterstate" [(ngModel)]="filterData.stateId" placeholeder="State" class="form-select" (change)="getSelectedStateIdFilter()">
+                      <option selected>Select</option>
+                      <option [value]="list.stateId" *ngFor="let list of stateList">{{list.stateName}}</option>
+                    </select>
+              </div>
+          </div>
+          <div class="col-12">
+              <div class="mb-2">
+                  <label for="exampleFormControlInput1" class="form-label">District</label>
+                  <select name="filterdistrict" [disabled]="!filterData.stateId" [(ngModel)]="filterData.districtId" class="form-select" (change)="getSelecteddistrictListFilter()">
+                      <option selected>Select</option>
+                      <option [value]="list.districtId" *ngFor="let list of districtListFilter">{{list.districtName}}</option>
+                    </select>
+              </div>
+          </div>
+          <div class="col-12">
+              <div class="mb-2">
+                  <label for="exampleFormControlInput1" class="form-label">Block</label>
+                  <select name="filterblock" [disabled]="!filterData.districtId" [(ngModel)]="filterData.blockId" class="form-select">
+                      <option selected>Select</option>
+                      <option [value]="list.healthBlockId" *ngFor="let list of blockListFilter">{{list.healthBlockName}}</option>
+                    </select>
+              </div>
+          </div>
+          <div class="col-12">
+              <div class="mb-2">
+                  <label for="exampleFormControlInput1" class="form-label">Facility</label>
+                  <select [disabled]="facilityDataFilter.length==0" name="filterfacilitytype" [(ngModel)]="filterData.facilityId" class="form-select">
+                      <option selected>Select</option>
+                      <option [value]="list.healthFacilityName" *ngFor="let list of facilityDataFilter">{{list.healthFacilityName}}</option>
+                    </select>
+              </div>
+          </div>
+          <div class="col-12">
+              <div class="mb-2">
+                  <label for="exampleFormControlInput1" class="form-label">Facility Type</label>
+                  <select [disabled]="facilityTypeDataFilter.length==0" name="filterfacilitytype" [(ngModel)]="filterData.facilityTypeId" class="form-select">
+                      <option selected>Select</option>
+                      <option [value]="list.facilityTypeId" *ngFor="let list of facilityTypeDataFilter">{{list.facilityTypeName}}</option>
+                    </select>
+              </div>
+          </div>
+
+          <div class="col-12">
+              <div class="mb-2">
+                  <label for="exampleFormControlInput1" class="form-label">Financial Year</label>
+                  <select class="form-select">
+                      <option selected>Select</option>
+                  </select>
+              </div>
+          </div>
+          <div class="col-12 d-grid">
+              <button type="button" class="btn btn-primary btn-block">Submit</button>
+          </div>
+      </div>
+  </div>
+  <div class="main">
+      <header class="clearfix">
+          <div class="logo pull-left">
+              <img src="assets/images/emblem.png" />
+          </div>
+          <div class="logo pull-right">
+              <img src="assets/images/emblem.png" />
+          </div>
+          <div class="text-center headerText">
+              National Health Mission
+              <small>Decision Support System</small>
+          </div>
+
+      </header>
+      <nav>
+          <ul>
+              <li><a href="#">Dashboard</a></li>
+              <li><a href="#">User Management</a></li>
+              <li><a href="#">Reports</a></li>
+          </ul>
+      </nav>
+
+      <div class="mainContent">
+          <div class="row">
+              <div class="col-12">
+                  <div class="card">
+                      <div class="card-body">
+                          <h5 class="card-title head clearfix">User Management
+                              <button type="button" (click)="logOut()" class="btn btn-primary pull-right btn-sm" style="margin-left: 5px">Logout</button>
+                              <button type="button" class="btn btn-primary pull-right btn-sm">Download Excel</button>
+                              <button type="button" class="btn btn-primary pull-right btn-sm m-r-5" data-bs-toggle="modal" (click)="openRegisterModel()">Register</button>
+
+                            </h5>
+
+                          <div class="row p-t-10">
+                              <div class="col-12">
+                                  <table class="table table-bordered table-striped table-hover" id="userTable">
+                                      <thead>
+                                          <tr>
+                                              <th>Name</th>
+                                              <th>Role</th>
+                                              <th>Contact</th>
+                                              <th>Email</th>
+                                              <th>Status</th>
+                                              <th>Action</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                          <tr *ngFor="let list of userList">
+                                              <td>{{list.name}}</td>
+                                              <td>{{list.role.roleName}}</td>
+                                              <td>{{list.mobileNumber}}</td>
+                                              <td>{{list.gmail}}</td>
+                                              <td>Active</td>
+                                              <td><button type="button" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button></td>
+                                          </tr>
+
+                                      </tbody>
+                                  </table>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModal" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+  <div class="modal-content">
+      <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">User Registration</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form #userForm="ngForm" (ngSubmit)="userForm.form.valid && onSubmit(userForm)">
+      <div class="modal-body">
+          <div class="row">
+              <div class="col-md-6">
+                  <div class="mb-3">
+                      <label for="exampleFormControlInput1" class="form-label">Role</label>
+                      <select name="role" [(ngModel)]="registerPayload.roleId" class="form-select" (change)="getSelectedRole()">
+                          <option selected>Select</option>
+                          <option [value]="list.roleId" *ngFor="let list of roleList">{{list.roleName}}</option>
+                        </select>
+                    </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="mb-3">
+                      <label for="exampleFormControlInput1" class="form-label">State</label>
+                      <select [disabled]="!registerPayload.roleId" name="state" placeholeder="State" [(ngModel)]="registerPayload.stateId" class="form-select" (change)="getSelectedStateId()">
+                          <option selected>Select</option>
+                          <option [value]="list.stateId" *ngFor="let list of stateList">{{list.stateName}}</option>
+                        </select>
+                    </div>
+              </div>
+
+
+              <div class="col-md-6">
+                  <div class="mb-3">
+                      <label for="exampleFormControlInput1" class="form-label">District</label>
+                      <select [disabled]="!registerPayload.stateId" name="district" [(ngModel)]="registerPayload.districtCode" class="form-select" (change)="getSelecteddistrictList()">
+                          <option selected>Select</option>
+                          <option [value]="list.districtCode" *ngFor="let list of districtList">{{list.districtName}}</option>
+                        </select>
+                    </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="mb-3">
+                      <label for="exampleFormControlInput1" class="form-label">Block</label>
+                      <select name="block" [disabled]="!registerPayload.districtCode" [(ngModel)]="registerPayload.blockCode" class="form-select" (change)="getSelectedBlockList()">
+                          <option selected>Select</option>
+                          <option [value]="list.healthBlockCode" *ngFor="let list of blockList">{{list.healthBlockName}}</option>
+                        </select>
+                    </div>
+              </div>
+              <div class="col-md-6" *ngIf="isHideFacility">
+                  <div class="mb-3">
+                      <label for="exampleFormControlInput1" class="form-label">Facility Type</label>
+                      <select [disabled]="facilityTypeData.length==0" name="facilitytype" [(ngModel)]="registerPayload.facilityTypeId" class="form-select"  (change)="getSelectedFacilityTypeList()">
+                          <option selected>Select</option>
+                          <option [value]="list.facilityTypeId" *ngFor="let list of facilityTypeData">{{list.facilityTypeName}}</option>
+                        </select>
+                    </div>
+              </div>
+              <div class="col-md-6" *ngIf="isHideFacility">
+                  <div class="mb-3">
+                      <label for="exampleFormControlInput1" class="form-label">Facility</label>
+                      <select [disabled]="facilityData.length==0" name="facility" [(ngModel)]="registerPayload.facilityCode" class="form-select" (change)="getSelectedFacilityList()">
+                          <option selected>Select</option>
+                          <option [value]="list.healthFacilityCode" *ngFor="let list of facilityData">{{list.healthFacilityName}}</option>
+                        </select>
+                      </div>
+              </div>
+
+
+              <div class="col-md-6" *ngIf="isHideFacility">
+                  <div class="mb-3">
+                      <label for="exampleFormControlInput1" class="form-label">Sub Facility</label>
+                        <select [disabled]="subfacilityData.length==0" name="subfacility" [(ngModel)]="registerPayload.subFacilityCode" class="form-select">
+                          <option selected>Select</option>
+                          <option [value]="list.healthSubFacilityCode" *ngFor="let list of subfacilityData">{{list.healthFacilityCenterName}}</option>
+                        </select>
+                    </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="mb-3">
+                      <label for="exampleFormControlInput1" class="form-label">Name</label>
+                      <input name="username" [(ngModel)]="registerPayload.name" #username="ngModel" type="email" id="userName" class="form-control" [ngClass]="{ 'is-invalid': userForm.submitted && username.invalid }" required minlength="3"/>
+                      <div class="invalid-feedback" *ngIf="userForm.submitted && username.invalid">
+                          <p *ngIf="username.errors?.required">Name is required.</p>
+                          <p *ngIf="!username.errors?.required && username.errors?.minlength">Name should be min 3.</p>
+                        </div>
+                    </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="mb-3">
+                      <label for="exampleFormControlInput1" class="form-label">Email</label>
+                      <input name="useremail" [(ngModel)]="registerPayload.email" #useremail="ngModel" type="email" id="userMail" [ngClass]="{ 'is-invalid': userForm.submitted && useremail.invalid }" pattern="" class="form-control" required/>
+                      <div class="invalid-feedback" *ngIf="userForm.submitted && useremail.invalid">
+                          <p *ngIf="useremail.errors?.required">Email is required.</p>
+                          <p *ngIf="!useremail.errors?.required && useremail.errors?.pattern">  Please enter correct email id.</p>
+                        </div>
+                    </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="mb-3">
+                      <label for="exampleFormControlInput1" class="form-label">Mobile</label>
+                      <input name="usermobile" [(ngModel)]="registerPayload.mobileNumber" #usermobile="ngModel"  [ngClass]="{ 'is-invalid': userForm.submitted && usermobile.invalid }" type="text" id="userMobile" class="form-control" required minlength="10" maxlength="10" required/>
+                        <div class="invalid-feedback" *ngIf="userForm.submitted && usermobile.invalid">
+                          <p *ngIf="usermobile.errors?.required">Mobile number is required.</p>
+                          <p *ngIf="!usermobile.errors?.required && usermobile.errors?.maxlength"> Please enter correct mobile.</p>
+                        </div>
+                    </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="mb-3">
+                      <label for="exampleFormControlInput1" class="form-label">Password</label>
+                      <input autocomplete="off" name="userpassword" [(ngModel)]="registerPayload.password" #userpassword="ngModel"  [ngClass]="{ 'is-invalid': userForm.submitted && usermobile.invalid }" type="password" id="userpassword" class="form-control" required minlength="4" required/>
+                        <div class="invalid-feedback" *ngIf="userForm.submitted && userpassword.invalid">
+                          <p *ngIf="userpassword.errors?.required">Password is required.</p>
+                          <p *ngIf="!userpassword.errors?.required && userpassword.errors?.minlength">Password min length is 3.</p>
+                        </div>
+                    </div>
+              </div>
+
+          </div>
+      </div>
+      <div class="modal-footer">
+      <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+      <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </form>
+  </div>
+  </div>
+</div>
+
+
+
