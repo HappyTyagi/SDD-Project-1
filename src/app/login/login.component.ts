@@ -22,9 +22,10 @@ export class LoginComponent implements OnInit {
 
   /** Method to logging user */
   onSubmit() {
-    this.coreHttp.post('user/login', this.loginPayload).pipe(takeUntil(this.unsubscribe$)).subscribe((res : any) => {
+    this.coreHttp.post('user/login', this.loginPayload).pipe(takeUntil(this.unsubscribe$)).subscribe(res => {
       if(res.status === 200) {
-        localStorage.setItem('token', res.response.token);
+        console.log(res.body.response)
+        localStorage.setItem('token', res.body.response.token);
         this.route.navigate(['/user-management']);
       }
     }, error=> {
