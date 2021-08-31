@@ -12,7 +12,8 @@ export class HttpHeaderInterceptorService implements HttpInterceptor {
       request = request.clone({
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
-          'token': this.token,
+          ...(this.token && { 'token': this.token }),
+       // ...this.token && 'token': this.token,
         })
       });
     return next.handle(request);
