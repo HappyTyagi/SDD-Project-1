@@ -64,4 +64,53 @@ export class FilterModel {
   facilityId!: string;
 }
 
+export class PatientModel {
+  patientId: number;
+  ageType: string;
+  caseCloseDate: any;
+  centerId: string;
+  createdAt: string;
+  createdBy: number;
+  deathDate: any;
+  dob: string;
+  fullName: string;
+  gender: string;
+  heightCm: number;
+  isActive: boolean;
+  isPregnant: boolean;
+  mobile: string;
+  mobileId: string;
+  mode: string;
+  sno: number;
+  spouseName: string;
+  status: string;
+  totalMonths: number;
+  totalWeeks: number;
+  updatedAt: string;
+  villageName: string;
+  weeksOfAge: number;
+  weightKg: number;
+  yearOfAge: number;
+}
+
+export class VisitModel {
+  ageInDays: number;
+  ageInWeeks: number;
+  ageInYears: number;
+  currentStatus: number;
+  dangerSign: string;
+  followUpDate: string;
+  id: number;
+  mobileId: string;
+  patientId: number;
+  patientType: string;
+  referred: number;
+  referredLocation: string;
+  symptoms: string;
+  temperature: number;
+  timeStamp: number;
+  visitDate: string;
+  visitNo: number;
+}
+
 

@@ -13,6 +13,7 @@ import { UserManagementComponent } from './user-management/user-management.compo
 import { LoaderInterceptor } from './core/interceptors/loader.interceptor';
 import { HttpHeaderInterceptorService } from './core/interceptors/http-header.interceptor';
 import { HttpErrorInterceptor } from './core/interceptors/http-error.interceptor';
+import { SharedModule } from './shared/shared.module';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { HttpErrorInterceptor } from './core/interceptors/http-error.interceptor
     HttpClientModule,
     CoreModule,
     FormsModule,
+    SharedModule,
     AppRoutingModule,
     ToastrModule.forRoot(),
   ],

@@ -92,7 +92,8 @@
                       <div class="card-body">
                           <h5 class="card-title head clearfix">User Management
                               <button type="button" (click)="logOut()" class="btn btn-primary pull-right btn-sm" style="margin-left: 5px">Logout</button>
-                              <button type="button" class="btn btn-primary pull-right btn-sm">Download Excel</button>
+                              <button type="button" class="btn btn-primary pull-right btn-sm" style="margin-left: 5px" (click)="getAllPatientExcel()">patient Excel</button>
+                              <button type="button" class="btn btn-primary pull-right btn-sm"  (click)="getAllVisitExcel()">Visit Excel</button>
                               <button type="button" class="btn btn-primary pull-right btn-sm m-r-5" data-bs-toggle="modal" (click)="openRegisterModel()">Register</button>
 
                             </h5>
