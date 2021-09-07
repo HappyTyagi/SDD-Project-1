@@ -99,13 +99,18 @@ export class VisitModel {
   ageInYears: number;
   currentStatus: number;
   dangerSign: string;
+  isCompleted: number;
+  isVerified: number;
   followUpDate: string;
   id: number;
+
   mobileId: string;
   patientId: number;
   patientType: string;
   referred: number;
   referredLocation: string;
+  selectedVaccines: string;
+  sno: number;
   symptoms: string;
   temperature: number;
   timeStamp: number;
