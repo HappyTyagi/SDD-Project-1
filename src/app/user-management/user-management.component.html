@@ -16,16 +16,16 @@
           <div class="col-12">
               <div class="mb-2">
                   <label for="exampleFormControlInput1" class="form-label">District</label>
-                  <select name="filterdistrict" [disabled]="!filterData.stateId" [(ngModel)]="filterData.districtId" class="form-select" (change)="getSelecteddistrictListFilter()">
+                  <select name="filterdistrict" [disabled]="!filterData.stateId" [(ngModel)]="filterData.districtCode" class="form-select" (change)="getSelecteddistrictListFilter()">
                       <option selected>Select</option>
-                      <option [value]="list.districtId" *ngFor="let list of districtListFilter">{{list.districtName}}</option>
+                      <option [value]="list.districtCode" *ngFor="let list of districtList">{{list.districtName}}</option>
                     </select>
               </div>
           </div>
           <div class="col-12">
               <div class="mb-2">
                   <label for="exampleFormControlInput1" class="form-label">Block</label>
-                  <select name="filterblock" [disabled]="!filterData.districtId" [(ngModel)]="filterData.blockId" class="form-select">
+                  <select name="filterblock" [disabled]="!filterData.districtCode" [(ngModel)]="filterData.blockId" class="form-select">
                       <option selected>Select</option>
                       <option [value]="list.healthBlockId" *ngFor="let list of blockListFilter">{{list.healthBlockName}}</option>
                     </select>

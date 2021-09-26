@@ -26,10 +26,9 @@ export class LoginComponent implements OnInit {
       if(res.status === 200) {
         console.log(res.body.response)
         localStorage.setItem('token', res.body.response.token);
-        this.route.navigate(['/user-management']);
+        this.route.navigate(['/dashboard']);
       }
     }, error=> {
-      console.log(error);
       this.notifyService.showError(error.message)
     })
   }

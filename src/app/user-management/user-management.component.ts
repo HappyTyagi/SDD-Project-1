@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CoreHttpService } from '../core/services/coreHttpServices/core-http.service';
-import { State, Districts, BlockDataModel, Roles, registerModel, FilterModel, PatientModel, VisitModel } from '../models/common.model';
+import { State, Districts, BlockDataModel, Roles, registerModel, FilterModel, PatientModel, VisitModel, UserListModel } from '../models/common.model';
 import { NgForm } from '@angular/forms';
 import { NotificationService } from '../core/services/notification.service';
 import { Router } from '@angular/router';
@@ -21,7 +21,8 @@ public stateList: State[] = [];
   public blockList: any[] = [];
   public blockListFilter: BlockDataModel[] = [];
   public roleList: Roles[] = [];
-  public userList: any  = [];
+  public userList: UserListModel[]  = [];
+  public userAllDetails: UserListModel[] = [];
   public facilityData: any = [];
   public facilityDataFilter: any = [];
   public facilityTypeData: any = [];
@@ -48,6 +49,7 @@ public stateList: State[] = [];
   /** Method to get user list */
   getUserListDetails() {
     this.coreHttp.get('user/getAllUsers').subscribe(res => {
+      this.userAllDetails = res.response;
       this.userList = res.response;
       $('#userTable').DataTable();
     }, error=> {
@@ -76,16 +78,7 @@ public stateList: State[] = [];
 
   /** Method to get selected state */
   getSelectedStateId() {
-    this.coreHttp.get(`districts/${this.registerPayload.stateId}`).subscribe(response => {
-      this.districtList = response.response.districts;
-    }, error=> {
-      if(error.exception.status === 401){
-        this.notifyService.showError(error.message);
-        this.route.navigate(['/login']);
-      } else {
-        this.notifyService.showError(error.message);
-      }
-    })
+    this.getDistrictList(this.registerPayload.stateId);
   }
 
   /** Method to get selected role */
@@ -109,24 +102,6 @@ public stateList: State[] = [];
         this.notifyService.showError(error.message);
       }
     })
-    // let data = this.districtList.find(ele => ele.districtId === Number(this.registerPayload.districtId));
-    // if(data.hasOwnProperty('blockData')) {
-    //   this.blockList = data.blockData;
-    // } else {
-    //   this.blockList = [];
-    // }
-
-    // if(data.hasOwnProperty('facilityData')) {
-    //     this.facilityData = data.facilityData;
-    // } else {
-    //   this.facilityData = [];
-    // }
-
-    // if(data.hasOwnProperty('healthFacilityTypeData')) {
-    //   this.facilityTypeData = data.healthFacilityTypeData;
-    // } else {
-    //   this.facilityTypeData = [];
-    // }
   }
 
   getSelectedBlockList() {
@@ -216,8 +191,14 @@ public stateList: State[] = [];
 
    /** Method to get selected state filter */
    getSelectedStateIdFilter() {
-    this.coreHttp.get(`district/${this.filterData.stateId}`).subscribe(response => {
-      this.districtListFilter = response.response.districts;
+    this.userList = this.userAllDetails.filter(ele => Number(ele.stateResponse.stateId) === Number(this.filterData.stateId));
+    this.getDistrictList(this.filterData.stateId);
+  }
+
+  /** Method to get district list from API */
+  getDistrictList(stateId) {
+    this.coreHttp.get(`districts/${stateId}`).subscribe(response => {
+      this.districtList = response.response.districts;
     }, error=> {
       if(error.exception.status === 401){
         this.notifyService.showError(error.message);
@@ -230,24 +211,7 @@ public stateList: State[] = [];
 
     /** Method to get select district */
     getSelecteddistrictListFilter() {
-      let data = this.districtListFilter.find(ele => ele.districtId === Number(this.filterData.districtId));
-      if(data.hasOwnProperty('blockData')) {
-        this.blockListFilter = data.blockData;
-      } else {
-        this.blockListFilter = [];
-      }
-
-      if(data.hasOwnProperty('facilityData')) {
-          this.facilityDataFilter = data.facilityData;
-      } else {
-        this.facilityDataFilter = [];
-      }
-
-      if(data.hasOwnProperty('healthFacilityTypeData')) {
-        this.facilityTypeDataFilter = data.healthFacilityTypeData;
-      } else {
-        this.facilityTypeDataFilter = [];
-      }
+      this.userList = this.userAllDetails.filter(ele => (ele.stateResponse.stateId === this.filterData.stateId))
     }
 
     /** Method to logout user */

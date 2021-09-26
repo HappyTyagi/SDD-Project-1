@@ -14,13 +14,15 @@ import { LoaderInterceptor } from './core/interceptors/loader.interceptor';
 import { HttpHeaderInterceptorService } from './core/interceptors/http-header.interceptor';
 import { HttpErrorInterceptor } from './core/interceptors/http-error.interceptor';
 import { SharedModule } from './shared/shared.module';
-
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    UserManagementComponent
+    UserManagementComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -30,6 +32,7 @@ import { SharedModule } from './shared/shared.module';
     FormsModule,
     SharedModule,
     AppRoutingModule,
+    ChartsModule,
     ToastrModule.forRoot(),
   ],
   providers: [ { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },

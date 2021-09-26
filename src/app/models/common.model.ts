@@ -57,11 +57,11 @@ export class Login {
 }
 
 export class FilterModel {
-  stateId!: string;
-  districtId!: string;
-  blockId!: string;
-  facilityTypeId!: string;
-  facilityId!: string;
+  stateId: number;
+  districtCode: string;
+  blockId: string;
+  facilityTypeId: string;
+  facilityId: string;
 }
 
 export class PatientModel {
@@ -103,7 +103,6 @@ export class VisitModel {
   isVerified: number;
   followUpDate: string;
   id: number;
-
   mobileId: string;
   patientId: number;
   patientType: string;
@@ -117,5 +116,21 @@ export class VisitModel {
   visitDate: string;
   visitNo: number;
 }
+
+export class UserListModel {
+  name: string;
+  gmail: string;
+  mobileNumber: string
+  role: Roles;
+  stateResponse:State;
+}
+
+export class DashboardDatamodel {
+  totalChild: number;
+totalCho: number;
+totalMother: number;
+}
+
+
 
 
