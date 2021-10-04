@@ -16,21 +16,22 @@ public barChartOptions = {
   scaleShowVerticalLines: false,
   responsive: true
 };
-public barChartLabels = ["April", "May", "June", "July", "August"];
+public barChartLabels = [];
 public barChartType = 'bar';
 public barChartLegend = true;
-public barChartData = [{ data: [65, 54, 78, 75, 77], label: 'Performance 2021' }];
-public barColors = [{backgroundColor: [ "#4568dc",
+public barChartData = [];
+public barColors = [{backgroundColor: [ "#4568df",
     "#b06ab3",
-     "#45B649",
+     "#45B549",
      "#ff7e5f",
-     "#feb47b",]}]
+     "#feb47b"]}]
 
-lineChartData: ChartDataSets[] = [
-  { data: [7,8,8,9,9,9,10,11,14,14,15], label: 'Registration 2021' },
-];
 
-lineChartLabels: Label[] = ["50","60","70","80","90","100","110","120","130","140","150"];
+lineChartData: ChartDataSets[] = [];
+motherChartData: ChartDataSets[] = [];
+
+lineChartLabels: Label[] = [];
+motherChartLabels: Label[] = [];
 
 lineChartOptions = {
   responsive: true,
@@ -40,11 +41,11 @@ lineChartOptions = {
 lineChartColors: Color[] = [
   {
     borderColor: "#45B649",
-    backgroundColor: "",
+    backgroundColor: null,
   },
 ];
 
-lineChartLegend = false;
+lineChartLegend = true;
 lineChartPlugins = [];
 lineChartType = 'line';
   constructor(private coreHttp: CoreHttpService, private notifyService: NotificationService) {
@@ -52,63 +53,6 @@ lineChartType = 'line';
   }
 
   ngOnInit(): void {
-    // var xValues = ["April", "May", "June", "July", "August"];
-    // var yValues = [55, 49, 44, 24, 15];
-    // var barColors = [
-    //     "#4568dc",
-    //     "#b06ab3",
-    //     "#45B649",
-    //     "#ff7e5f",
-    //     "#feb47b",
-    //   ];
-
-    // new Chart("barChart", {
-    //     type: "bar",
-    //     data: {
-    //         labels: xValues,
-    //         datasets: [{
-    //             label: 'Performance 2021',
-    //             backgroundColor: barColors,
-    //             data: yValues
-    //         }]
-    //     },
-    //     options: {
-    //         responsive: true,
-    //         plugins:{
-    //             legend: {
-    //                 display: true,
-    //                 position: 'bottom'
-    //             }
-    //         }
-    //     }
-    // });
-
-
-    // //line chart
-    // var xValues = [50,60,70,80,90,100,110,120,130,140,150];
-    // var yValues = [7,8,8,9,9,9,10,11,14,14,15];
-
-    // new Chart("lineChart", {
-    // type: "line",
-    // data: {
-    //     labels: xValues,
-    //     datasets: [{
-    //         label: 'Registration 2021',
-    //         backgroundColor: "#45B649",
-    //         borderColor: "#45B649",
-    //         data: yValues
-    //     }]
-    // },
-    // options:{
-    //     responsive: true,
-    //     plugins:{
-    //         legend: {
-    //             display: true,
-    //             position: 'bottom',
-    //         }
-    //     }
-    // }
-    // });
   }
 
   /** Method to get all dashboard data */
@@ -116,6 +60,29 @@ lineChartType = 'line';
     this.coreHttp.get('patient/getAllDashBoardData').subscribe(response => {
       console.log(response.response);
       this.dashboardData = response.response;
+      // cho chart
+      let barchartData = []
+      this.dashboardData.cho.forEach((ele) => {
+        this.barChartLabels.push(ele.level);
+        barchartData.push(ele.value);
+      });
+     this.barChartData = [{ data: barchartData, label: 'Performance 2021' }];
+    //  child chart
+    let childData = [];
+     this.dashboardData.child.forEach((ele) => {
+      this.lineChartLabels.push(ele.level);
+      childData.push(ele.value);
+    });
+   this.lineChartData = [{ data: childData, label: 'Registration 2021' }];
+
+   // Mother chart
+   let motherData = [];
+     this.dashboardData.mother.forEach((ele) => {
+      this.motherChartLabels.push(ele.level);
+      motherData.push(ele.value);
+    });
+   this.motherChartData = [{ data: motherData, label: 'Registration 2021' }];
+
     }, error => {
       this.notifyService.showError(error.message)
     })

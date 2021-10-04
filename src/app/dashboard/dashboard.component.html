@@ -110,8 +110,27 @@
               <div class="col-md-6">
                   <div class="card">
                       <div class="card-body">
-                          <h5 class="card-title head clearfix">Performance</h5>
-                          <canvas baseChart
+                          <h5 class="card-title head clearfix">Mother</h5>
+                          <canvas baseChart *ngIf="motherChartLabels"
+                          [datasets]="motherChartData"
+                          [labels]="motherChartLabels"
+                          [options]="barChartOptions"
+                          [legend]="false"
+
+                          [chartType]="lineChartType"
+                          [plugins]="lineChartPlugins">
+                  </canvas>
+                          <!-- <canvas id="barChart" class="dashchart"></canvas> -->
+                      </div>
+                  </div>
+              </div>
+              <br>
+              <br>
+              <div class="col-md-6">
+                  <div class="card">
+                      <div class="card-body">
+                          <h5 class="card-title head clearfix">CHO</h5>
+                          <canvas baseChart *ngIf="barChartLabels"
                           [datasets]="barChartData"
                           [labels]="barChartLabels"
                           [options]="barChartOptions"
@@ -125,10 +144,10 @@
               </div>
 
 
-              <div class="col-md-6">
+              <div class="col-md-6" style="margin-top: 20px;">
                   <div class="card">
                       <div class="card-body">
-                          <h5 class="card-title head clearfix">Registration</h5>
+                          <h5 class="card-title head clearfix">Child</h5>
                           <canvas baseChart
                           [datasets]="lineChartData"
                           [labels]="lineChartLabels"

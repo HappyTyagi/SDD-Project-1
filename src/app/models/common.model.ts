@@ -129,6 +129,14 @@ export class DashboardDatamodel {
   totalChild: number;
 totalCho: number;
 totalMother: number;
+mother: ChartModel[];
+child: ChartModel[];
+cho: ChartModel[];
+}
+
+export class ChartModel {
+  level: string;
+  value: number;
 }
 
 
