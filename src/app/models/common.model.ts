@@ -59,9 +59,9 @@ export class Login {
 export class FilterModel {
   stateId: number;
   districtCode: string;
-  blockId: string;
+  blockCode: string;
   facilityTypeId: string;
-  facilityId: string;
+  facilityCode: string;
 }
 
 export class PatientModel {
@@ -117,12 +117,50 @@ export class VisitModel {
   visitNo: number;
 }
 
+export class DistrictModel {
+  districtName: string;
+  districtCode: number;
+}
+
+export class StateModel {
+  stateId: number;
+  stateName: string;
+}
+
+export class BlockModel {
+  healthBlockId: number;
+  healthBlockCode: number;
+  healthBlockName: string;
+  districtCode: number;
+  talukaId: string;
+  mddsCode: number;
+  stateId: number;
+}
+
+export class healthFacilityResponseModel {
+  healthFacilityId: number;
+  healthFacilityCode: number;
+  healthFacilityName: string;
+  districtCode: number;
+  talukaId: number;
+  healthBlockCode: number;
+  healthFacilityTypeId: number;
+}
+
+export class healthFacilityTypeModel {
+  facilityTypeId: number;
+  facilityTypeName: string;
+}
 export class UserListModel {
   name: string;
   gmail: string;
-  mobileNumber: string
+  mobileNumber: string;
   role: Roles;
-  stateResponse:State;
+  districtResponse: DistrictModel;
+  stateResponse: StateModel;
+  blockResponse: BlockModel;
+  healthFacilityResponse: healthFacilityResponseModel;
+  healthFacilityTypeResponse: healthFacilityTypeModel;
 }
 
 export class DashboardDatamodel {

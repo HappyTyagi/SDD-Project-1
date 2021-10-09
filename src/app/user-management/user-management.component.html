@@ -25,42 +25,52 @@
           <div class="col-12">
               <div class="mb-2">
                   <label for="exampleFormControlInput1" class="form-label">Block</label>
-                  <select name="filterblock" [disabled]="!filterData.districtCode" [(ngModel)]="filterData.blockId" class="form-select">
+                  <select name="filterblock" [disabled]="!filterData.districtCode" [(ngModel)]="filterData.blockCode" class="form-select" (change)="getSelectedBlockListFilter($event)">
                       <option selected>Select</option>
-                      <option [value]="list.healthBlockId" *ngFor="let list of blockListFilter">{{list.healthBlockName}}</option>
-                    </select>
-              </div>
-          </div>
-          <div class="col-12">
-              <div class="mb-2">
-                  <label for="exampleFormControlInput1" class="form-label">Facility</label>
-                  <select [disabled]="facilityDataFilter.length==0" name="filterfacilitytype" [(ngModel)]="filterData.facilityId" class="form-select">
-                      <option selected>Select</option>
-                      <option [value]="list.healthFacilityName" *ngFor="let list of facilityDataFilter">{{list.healthFacilityName}}</option>
+                      <option [value]="list.healthBlockCode" *ngFor="let list of blockList">{{list.healthBlockName}}</option>
                     </select>
               </div>
           </div>
           <div class="col-12">
               <div class="mb-2">
                   <label for="exampleFormControlInput1" class="form-label">Facility Type</label>
+                  <select [disabled]="facilityTypeData.length==0" name="facilitytype" [(ngModel)]="filterData.facilityTypeId" class="form-select"  (change)="getSelectedFacilityTypeListFilter()">
+                      <option selected>Select</option>
+                      <option [value]="list.facilityTypeId" *ngFor="let list of facilityTypeData">{{list.facilityTypeName}}</option>
+                    </select>
+                  <!-- <label for="exampleFormControlInput1" class="form-label">Facility</label>
+                  <select [disabled]="facilityDataFilter.length==0" name="filterfacilitytype" [(ngModel)]="filterData.facilityId" class="form-select">
+                      <option selected>Select</option>
+                      <option [value]="list.healthFacilityName" *ngFor="let list of facilityDataFilter">{{list.healthFacilityName}}</option>
+                    </select> -->
+              </div>
+          </div>
+          <div class="col-12">
+              <div class="mb-2">
+                  <label for="exampleFormControlInput1" class="form-label">Facility</label>
+                  <select [disabled]="facilityData.length==0" name="facility" [(ngModel)]="filterData.facilityCode" class="form-select" (change)="getSelectedFacilityListFilter()">
+                      <option selected>Select</option>
+                      <option [value]="list.healthFacilityCode" *ngFor="let list of facilityTypeData">{{list.healthFacilityName}}</option>
+                    </select>
+                  <!-- <label for="exampleFormControlInput1" class="form-label">Facility Type</label>
                   <select [disabled]="facilityTypeDataFilter.length==0" name="filterfacilitytype" [(ngModel)]="filterData.facilityTypeId" class="form-select">
                       <option selected>Select</option>
                       <option [value]="list.facilityTypeId" *ngFor="let list of facilityTypeDataFilter">{{list.facilityTypeName}}</option>
-                    </select>
+                    </select> -->
               </div>
           </div>
 
-          <div class="col-12">
+          <!-- <div class="col-12">
               <div class="mb-2">
                   <label for="exampleFormControlInput1" class="form-label">Financial Year</label>
                   <select class="form-select">
                       <option selected>Select</option>
                   </select>
               </div>
-          </div>
-          <div class="col-12 d-grid">
+          </div> -->
+          <!-- <div class="col-12 d-grid">
               <button type="button" class="btn btn-primary btn-block">Submit</button>
-          </div>
+          </div> -->
       </div>
   </div>
   <div class="main">
@@ -88,6 +98,9 @@
                                               <th>Role</th>
                                               <th>Contact</th>
                                               <th>Email</th>
+                                              <th>State</th>
+                                              <th>District</th>
+                                              <!-- <th>Block</th> -->
                                               <th>Status</th>
                                               <th>Action</th>
                                           </tr>
@@ -98,6 +111,9 @@
                                               <td>{{list.role.roleName}}</td>
                                               <td>{{list.mobileNumber}}</td>
                                               <td>{{list.gmail}}</td>
+                                              <td>{{list.stateResponse.stateName}}</td>
+                                              <td>{{list.districtResponse.districtName}}</td>
+                                              <!-- <td *ngIf="list.blockResponse.healthBlockName">{{list.blockResponse.healthBlockName}}</td> -->
                                               <td>Active</td>
                                               <td><button type="button" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button></td>
                                           </tr>

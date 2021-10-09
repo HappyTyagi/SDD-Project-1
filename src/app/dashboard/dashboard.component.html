@@ -35,11 +35,11 @@
                       <div class="card-body">
                           <h5 class="card-title head clearfix">Mother</h5>
                           <canvas baseChart *ngIf="motherChartLabels"
+
                           [datasets]="motherChartData"
                           [labels]="motherChartLabels"
                           [options]="barChartOptions"
-                          [legend]="false"
-
+                          [legend]="true"
                           [chartType]="lineChartType"
                           [plugins]="lineChartPlugins">
                   </canvas>

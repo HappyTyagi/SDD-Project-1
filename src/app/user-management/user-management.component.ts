@@ -18,8 +18,7 @@ export class UserManagementComponent implements OnInit {
 public stateList: State[] = [];
   public districtList: any[] = [];
   public districtListFilter: any[] = [];
-  public blockList: any[] = [];
-  public blockListFilter: BlockDataModel[] = [];
+  public blockList: BlockDataModel[] = [];
   public roleList: Roles[] = [];
   public userList: UserListModel[]  = [];
   public userAllDetails: UserListModel[] = [];
@@ -27,7 +26,6 @@ public stateList: State[] = [];
   public facilityDataFilter: any = [];
   public facilityTypeData: any = [];
   public subfacilityData: any = [];
-  public facilityTypeDataFilter: any = [];
   public isHideFacility: boolean = false;
   public facility: string = '';
   public subfacility: string = '';
@@ -92,7 +90,12 @@ public stateList: State[] = [];
 
   /** Method to get select district */
   getSelecteddistrictList() {
-    this.coreHttp.get(`blocks/${this.registerPayload.districtCode}/${this.registerPayload.stateId}`).subscribe(response => {
+    this.getBlockList(this.registerPayload.districtCode, this.registerPayload.stateId);
+  }
+
+  /** get Block List from API */
+  getBlockList(districtCode, stateId) {
+    this.coreHttp.get(`blocks/${districtCode}/${stateId}`).subscribe(response => {
       this.blockList = response.response;
     }, error=> {
       if(error.exception.status === 401){
@@ -104,9 +107,26 @@ public stateList: State[] = [];
     })
   }
 
+  /** getSelectedBlock List filter */
+  getSelectedBlockListFilter(event) {
+    this.getFacilityTypeList(this.filterData.blockCode, this.filterData.districtCode, this.filterData.stateId);
+    if(this.userAllDetails.filter(ele => Number(ele.blockResponse.healthBlockCode) === Number(this.filterData.blockCode))){
+      this.userList = this.userAllDetails.filter(ele => Number(ele.blockResponse.healthBlockCode) === Number(this.filterData.blockCode));
+
+    } else {
+      this.userList = [];
+    }
+ debugger
+  }
+
+  /** Method to get block list */
   getSelectedBlockList() {
-  //  let blockCode = this.blockList.find(ele => Number(ele.healthBlockId) === Number(this.registerPayload.blockId)).healthBlockCode
-    this.coreHttp.get(`facilityTypes/${this.registerPayload.blockCode}/${this.registerPayload.districtCode}/${this.registerPayload.stateId}`).subscribe(response => {
+    this.getFacilityTypeList(this.registerPayload.blockCode, this.registerPayload.districtCode, this.registerPayload.stateId);
+  }
+
+  /** Method to get facility type data */
+  getFacilityTypeList(blockCode, districtCode, stateId) {
+    this.coreHttp.get(`facilityTypes/${blockCode}/${districtCode}/${stateId}`).subscribe(response => {
       this.facilityTypeData = response.response;
     }, error=> {
       if(error.exception.status === 401){
@@ -118,9 +138,22 @@ public stateList: State[] = [];
     })
   }
 
+  getSelectedFacilityTypeListFilter() {
+    this.userList = this.userAllDetails.filter(ele => Number(ele.healthFacilityTypeResponse.facilityTypeId) === Number(this.filterData.facilityTypeId));
+    this.getFacilityDataList(this.filterData.blockCode, this.filterData.stateId, this.filterData.facilityTypeId)
+   }
+
+   getSelectedFacilityListFilter() {
+    this.userList = this.userAllDetails.filter(ele => Number(ele.healthFacilityResponse.healthFacilityCode) === Number(this.filterData.facilityCode));
+   }
+
   getSelectedFacilityTypeList() {
-   // let blockCode = this.blockList.find(ele => Number(ele.healthBlockId) === Number(this.registerPayload.blockId)).healthBlockCode
-    this.coreHttp.get(`facilities/${this.registerPayload.blockCode}/${this.registerPayload.stateId}/${this.registerPayload.facilityTypeId}`).subscribe(response => {
+    this.getFacilityDataList(this.registerPayload.blockCode, this.registerPayload.stateId, this.registerPayload.facilityTypeId)
+  }
+
+  /** Method to get facility data */
+  getFacilityDataList(blockCode, stateId, facilityTypeId) {
+    this.coreHttp.get(`facilities/${blockCode}/${stateId}/${facilityTypeId}`).subscribe(response => {
       this.facilityData = response.response;
     }, error=> {
       if(error.exception.status === 401){
@@ -211,7 +244,9 @@ public stateList: State[] = [];
 
     /** Method to get select district */
     getSelecteddistrictListFilter() {
-      this.userList = this.userAllDetails.filter(ele => (ele.stateResponse.stateId === this.filterData.stateId))
+      this.userList = this.userAllDetails.filter(ele => (ele.stateResponse.stateId === this.filterData.stateId));
+      this.getBlockList(this.filterData.districtCode, this.filterData.stateId);
+
     }
 
     /** Method to logout user */
