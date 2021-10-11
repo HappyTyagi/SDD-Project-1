@@ -110,12 +110,11 @@ public stateList: State[] = [];
   /** getSelectedBlock List filter */
   getSelectedBlockListFilter(event) {
     this.getFacilityTypeList(this.filterData.blockCode, this.filterData.districtCode, this.filterData.stateId);
-    if(this.userAllDetails.filter(ele => Number(ele.blockResponse.healthBlockCode) === Number(this.filterData.blockCode))){
-      this.userList = this.userAllDetails.filter(ele => Number(ele.blockResponse.healthBlockCode) === Number(this.filterData.blockCode));
-
-    } else {
-      this.userList = [];
-    }
+      this.userList = this.userAllDetails.filter(ele => {
+          if(Number(ele.blockResponse)){
+            Number(ele.blockResponse.healthBlockCode) === Number(this.filterData.blockCode)
+          }
+      });
  debugger
   }
 
@@ -139,12 +138,16 @@ public stateList: State[] = [];
   }
 
   getSelectedFacilityTypeListFilter() {
-    this.userList = this.userAllDetails.filter(ele => Number(ele.healthFacilityTypeResponse.facilityTypeId) === Number(this.filterData.facilityTypeId));
+    this.userList = this.userAllDetails.filter(ele =>{
+      if(ele.healthFacilityTypeResponse)
+       Number(ele.healthFacilityTypeResponse.facilityTypeId) === Number(this.filterData.facilityTypeId)});
     this.getFacilityDataList(this.filterData.blockCode, this.filterData.stateId, this.filterData.facilityTypeId)
    }
 
    getSelectedFacilityListFilter() {
-    this.userList = this.userAllDetails.filter(ele => Number(ele.healthFacilityResponse.healthFacilityCode) === Number(this.filterData.facilityCode));
+    this.userList = this.userAllDetails.filter(ele => {
+      if(ele.healthFacilityResponse)
+      Number(ele.healthFacilityResponse.healthFacilityCode) === Number(this.filterData.facilityCode)});
    }
 
   getSelectedFacilityTypeList() {
@@ -303,4 +306,6 @@ public stateList: State[] = [];
         link.click();
         document.body.removeChild(link);
   }
+
+
 }
