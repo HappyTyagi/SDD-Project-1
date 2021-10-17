@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiBaseURL: 'http://visheshsolution.com:9001/'
+  apiBaseURL: 'http://103.248.60.70:9000/'
 };
 
 /*
